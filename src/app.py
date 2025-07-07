@@ -1,6 +1,7 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
+from flask_jwt_extended import JWTManager
 import os
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
@@ -15,12 +16,15 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+# JWT Config
+app.config['JWT_SECRET_KEY'] = os.getenv('FLASK_APP_KEY', 'super-secret')
+jwt = JWTManager(app)
+
 # from models import Person
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../dist/')
-app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 # database condiguration
