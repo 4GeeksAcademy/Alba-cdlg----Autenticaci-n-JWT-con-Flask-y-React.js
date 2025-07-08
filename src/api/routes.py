@@ -28,11 +28,12 @@ def handle_hello():
 @api.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
+    name = data.get('name', None)
     email = data.get('email', None)
     password = data.get('password', None)
 
-    if not email or not password:
-        return jsonify({"msg": "Email and password are required"}), 400
+    if not name or not email or not password:
+        return jsonify({"msg": "Name, email, and password are required"}), 400
 
     # Verifica si el usuario existe
     user_exists = User.query.filter_by(email=email).first()
@@ -43,7 +44,7 @@ def signup():
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
     # Crea y guarda el nuevo usuario
-    new_user = User(email=email, password=hashed_password, is_active=True)
+    new_user = User(name=name, email=email, password=hashed_password, is_active=True)
     db.session.add(new_user)
     db.session.commit()
 
@@ -65,4 +66,8 @@ def login():
 
     # Crea JWT token
     access_token = create_access_token(identity=user.id)
-    return jsonify(access_token=access_token, user_id=user.id), 200
+    return jsonify(
+        access_token=access_token,
+        user_id=user.id,
+        name=user.name  # 👈 añadimos el nombre para el frontend
+    ), 200
