@@ -25,7 +25,8 @@ const Login = () => {
 
             if (response.ok) {
                 sessionStorage.setItem("token", data.access_token);
-                alert("Inicio de sesión exitoso");
+                sessionStorage.setItem("user_name", data.name);
+                alert(`Bienvenido, ${data.name}`);
                 navigate("/private");
             } else {
                 setError(data.msg || "Error al iniciar sesión");
