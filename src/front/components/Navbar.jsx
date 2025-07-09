@@ -15,6 +15,10 @@ export const Navbar = () => {
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light bg-light">
 			<div className="container">
+				{/* ✅ Nuevo botón "Inicio" */}
+				<Link to="/" className="btn btn-outline-dark me-2">
+					Inicio
+				</Link>
 				{/* ✅ Saludo en lugar del título fijo */}
 				<span className="navbar-text fw-bold">
 					{token ? `Hola, ${userName}` : "Bienvenido"}
