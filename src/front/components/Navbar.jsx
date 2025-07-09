@@ -21,7 +21,13 @@ export const Navbar = () => {
 				</Link>
 				{/* ✅ Saludo en lugar del título fijo */}
 				<span className="navbar-text fw-bold">
-					{token ? `Hola, ${userName}` : "Bienvenido"}
+					{token ? (
+						<Link to="/private" className="text-decoration-none text-dark">
+							Hola, {userName}
+						</Link>
+					) : (
+						"Bienvenido"
+					)}
 				</span>
 
 				{/* Menú hamburguesa solo en pantallas pequeñas */}
